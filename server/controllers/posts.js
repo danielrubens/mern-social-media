@@ -16,11 +16,11 @@ const createPost = async(req, res) =>{
     const newPost = new PostMessage(post)
     try{
         await newPost.save()
-        res.status(201).json(newPost)
+        return res.status(201).json(newPost)
     }catch(e){
         res.status(409).json({ message: e.message })
     }
-    res.send('Post Creation')
+    return res.send('Post Creation')
 }
 
 export {getPosts, createPost}
