@@ -1,13 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { GoogleLogin } from 'react-google-login'
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import useStyles from './styles'
 import Input from './Input'
 import Icon from './icon'
-import dotenv from 'dotenv'
-
-dotenv.config()
+import { gapi } from 'gapi-script'
 
 const Auth = () => {
     const classes = useStyles()
@@ -31,14 +29,19 @@ const Auth = () => {
       handleShowPassword(false)
     }
 
+    const clientId = '732732546818-8jq4in4mon7cmqma3cpk4ej3s1fiot2h.apps.googleusercontent.com'
+    
+    useEffect(() => {
+      gapi.load("client: auth2", () => {
+        gapi.auth2.init({clientId})
+      })
+    }, [])
+
     const googleSuccess = async (res) =>  {
-      console.log(res)
+      await console.log(res)
     }
 
-    const googleFailure = (error) => {
-      console.log({error})
-      console.log("Google Sign In was unsuccessful. Try again later")
-    }
+    const googleError = (error) => console.log({error});
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -65,20 +68,18 @@ const Auth = () => {
             <Button type='submit' fullWidth variant='contained' color='primary' className={classes.submit}>
               {isSignup ? 'Sign Up' : 'Sign In'}
             </Button>
-            <GoogleLogin 
-              clientId='732732546818-8jq4in4mon7cmqma3cpk4ej3s1fiot2h.apps.googleusercontent.com'
-              render={(renderProps) => (
-                <Button className={classes.googleButton} color='primary' fullWidth 
-                        onClick={renderProps.onClick} disabled={renderProps.disabled}
-                        startIcon={<Icon />} variant='contained'
-                        >
-                          Google Sign In
-                </Button>
-              )}
-              onSuccess={googleSuccess}
-              onFailure={googleFailure}
-              cookiePolicy='single_host_origin'
-            />
+            <GoogleLogin
+            // clientId='732732546818-8jq4in4mon7cmqma3cpk4ej3s1fiot2h.apps.googleusercontent.com'
+            clientId={clientId}
+            render={(renderProps) => (
+              <Button className={classes.googleButton} color="primary" fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant="contained">
+                Google Sign In
+              </Button>
+            )}
+            onSuccess={googleSuccess}
+            onFailure={googleError}
+            cookiePolicy={"single_host_origin"}
+          />
             <Grid container justify='flex-end'>
               <Grid item>
                 <Button onClick={switchMode}>
