@@ -37,9 +37,7 @@ const Auth = () => {
       })
     }, [])
 
-    const googleSuccess = async (res) =>  {
-      await console.log(res)
-    }
+    const googleSuccess = async (res) =>  console.log(res)
 
     const googleError = (error) => console.log({error});
 
@@ -80,7 +78,7 @@ const Auth = () => {
             onFailure={googleError}
             cookiePolicy={"single_host_origin"}
           />
-            <Grid container justify='flex-end'>
+            <Grid container justifyContent='flex-end'>
               <Grid item>
                 <Button onClick={switchMode}>
                   { isSignup? 'Already have an acount? Sign In' : "Don't have an account? Sign Up"}
