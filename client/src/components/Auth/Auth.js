@@ -5,6 +5,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import useStyles from './styles'
 import Input from './Input'
 import Icon from './icon'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const Auth = () => {
     const classes = useStyles()
@@ -28,11 +31,12 @@ const Auth = () => {
       handleShowPassword(false)
     }
 
-    const googleSuccess = (res) => {
+    const googleSuccess = async (res) =>  {
       console.log(res)
     }
 
-    const googleFailure = () => {
+    const googleFailure = (error) => {
+      console.log({error})
       console.log("Google Sign In was unsuccessful. Try again later")
     }
 
@@ -58,8 +62,11 @@ const Auth = () => {
                      type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} />
               { isSignup && <Input name='confirmPassword' label='Repeat Password' handleChange={handleChange} type='password' /> }
             </Grid>
+            <Button type='submit' fullWidth variant='contained' color='primary' className={classes.submit}>
+              {isSignup ? 'Sign Up' : 'Sign In'}
+            </Button>
             <GoogleLogin 
-              clientId='GOOGLE_ID'
+              clientId='732732546818-8jq4in4mon7cmqma3cpk4ej3s1fiot2h.apps.googleusercontent.com'
               render={(renderProps) => (
                 <Button className={classes.googleButton} color='primary' fullWidth 
                         onClick={renderProps.onClick} disabled={renderProps.disabled}
@@ -72,9 +79,6 @@ const Auth = () => {
               onFailure={googleFailure}
               cookiePolicy='single_host_origin'
             />
-            <Button type='submit' fullWidth variant='contained' color='primary' className={classes.submit}>
-              {isSignup ? 'Sign Up' : 'Sign In'}
-            </Button>
             <Grid container justify='flex-end'>
               <Grid item>
                 <Button onClick={switchMode}>
