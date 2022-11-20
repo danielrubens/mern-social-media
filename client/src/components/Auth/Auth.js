@@ -6,9 +6,13 @@ import useStyles from './styles'
 import Input from './Input'
 import Icon from './icon'
 import { gapi } from 'gapi-script'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 const Auth = () => {
     const classes = useStyles()
+    const dispatch = useDispatch()
+    const history = useHistory()
     const [showPassword, setShowPassword] = useState(false)
     const [isSignup, setIsSignup] = useState(false)
 
@@ -37,8 +41,16 @@ const Auth = () => {
       })
     }, [])
 
-    const googleSuccess = async (res) =>  console.log(res)
-
+    const googleSuccess = async (res) =>  {
+      const result = res?.profileObj
+      const token = res?.tokenId
+      try{
+        dispatch({type: 'AUTH', data: {result, token}})
+        history.push('/')
+      }catch(error){
+        console.log({ error })
+      }
+    }
     const googleError = (error) => console.log({error});
 
   return (
