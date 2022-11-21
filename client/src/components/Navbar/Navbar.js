@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import decode from 'jwt-decode'
 import {AppBar, Typography, Avatar, Toolbar, Button} from '@material-ui/core'
 import useStyles from './styles'
 import memories from '../../images/memories.png'
@@ -12,16 +13,21 @@ const Navbar = () => {
     const location = useLocation()
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
     
-    useEffect(() => {
-        const token = user?.token
-        setUser(JSON.parse(localStorage.getItem('profile')))
-    }, [location])
-
     const logout = () => {
         dispatch({type: 'LOGOUT'})
         history.push('/')
         setUser(null)
     }
+
+    useEffect(() => {
+        const token = user?.token
+        if(token){
+            const decoded = decode(token)
+            if(decoded.exp * 1000 < newDate().getTime()) logout()
+        }
+        setUser(JSON.parse(localStorage.getItem('profile')))
+    }, [location])
+
   return (
     <AppBar className={classes.appBar} position='static' color='inherit'>
         <div className={classes.brandContainer}>
