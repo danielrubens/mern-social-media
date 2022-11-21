@@ -42,9 +42,7 @@ const deletePost = async (req, res) => {
 
 const likePost = async (req, res) =>{
     const { id } = req.params;
-
     if(!req.userId) return res.json({message: 'Unauthenticated'})
-
 
     if(!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).send('No post with that id')
