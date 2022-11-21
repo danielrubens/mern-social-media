@@ -1,4 +1,4 @@
-This is a MERN project deployed on [Zeet](https://fejg2o6wm9.execute-api.us-east-2.amazonaws.com/) where you can create your account and to CRUD operations.
+This is a MERN project deployed on [Zeet](https://fejg2o6wm9.execute-api.us-east-2.amazonaws.com/) where you can create your account and perform CRUD operations.
 
 ## Getting Started
 
