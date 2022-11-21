@@ -8,6 +8,7 @@ const auth = async (req, res, next) => {
         let decodedData;
         if(token && isCustomAuth){
             decodedData = jwt.verify(token, 'test')
+             // in the middleware you can populate the request
             req.userId = decodedData?.id
         } else{
             decodedData = jwt.decode(token) // from Google
@@ -16,6 +17,7 @@ const auth = async (req, res, next) => {
         next()
 
     } catch (error) {
+        console.log('CHEGOU AQUI')
         console.log({ error })
     }
 }

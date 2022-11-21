@@ -39,7 +39,7 @@ const Auth = () => {
 
     const switchMode = () => {
       setIsSignup((prev) => !prev)
-      handleShowPassword(false)
+      setShowPassword(false)
     }
 
     const clientId = '732732546818-8jq4in4mon7cmqma3cpk4ej3s1fiot2h.apps.googleusercontent.com'
