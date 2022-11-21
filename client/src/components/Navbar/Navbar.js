@@ -18,7 +18,7 @@ const Navbar = () => {
         history.push('/')
         setUser(null)
     }
-
+//
     useEffect(() => {
         const token = user?.token
         if(token){
