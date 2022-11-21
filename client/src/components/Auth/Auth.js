@@ -8,6 +8,7 @@ import Icon from './icon'
 import { gapi } from 'gapi-script'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { signin, signup } from '../../actions/auth'
 
 const initialState = {firstName: '', lastName: '', email: '', password: '', confirmPassword: ''}
 
@@ -21,7 +22,11 @@ const Auth = () => {
 
     const handleSubmit = (e) => {
       e.preventDefault()
-      console.log(formData)
+      if (isSignup){
+        dispatch(signup(formData, history))
+      } else{
+        dispatch(signin(formData, history))
+      }
     }
 
     const handleChange = (e) => {
@@ -83,7 +88,6 @@ const Auth = () => {
               {isSignup ? 'Sign Up' : 'Sign In'}
             </Button>
             <GoogleLogin
-            // clientId='732732546818-8jq4in4mon7cmqma3cpk4ej3s1fiot2h.apps.googleusercontent.com'
             clientId={clientId}
             render={(renderProps) => (
               <Button className={classes.googleButton} color="primary" fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant="contained">
@@ -102,7 +106,6 @@ const Auth = () => {
               </Grid>
             </Grid>
         </form>
-
       </Paper>
     </Container>
   )
