@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API = axios.create({baseURL: 'http://localhost:5000' })
+const API = axios.create({baseURL: 'https://server-social-media-eww6.onrender.com/' })
 
 // it helps the auth middleware -> send token back to the backend, so the backend middleware verify user is logged in
 API.interceptors.request.use((req) => {
